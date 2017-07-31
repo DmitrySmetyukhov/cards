@@ -1,24 +1,78 @@
-
-<div class="row">
+<button
+        class="btn btn-link"
+        (click)="revert()"
+>Reverse
+</button>
+<h2>
+    <button
+            class="btn btn-link"
+            (click)="createNew()"
+    >Create new
+    </button>
+</h2>
+<div class="form-group row">
+    <div class="col-md-3"></div>
     <div class="col-md-6">
-        word: <input type="text">
-        translation: <input type="text">
-        <button >check</button>
-    </div>
-    <div class="col-md-4">
-        <h2><a href="#" (click)="createNew($event)">create new</a></h2>
+
         <form *ngIf="showCreateForm" [formGroup]="newCardForm" (ngSubmit)="onSubmitNew(newCardForm)">
-            word: <input
-                formControlName="newWord"
-                type="text"
-        >
-            translation: <input
-                formControlName="newTranslation"
-                type="text"
-        >
-            <button type="submit" [disabled]="newCardForm.invalid">submit</button>
+            <label for="newWord" class="col-2 col-form-label">Word</label>
+            <input
+                    class="form-control"
+                    formControlName="newWord"
+                    id="newWord"
+                    type="text"
+            >
+            <label for="newTranslation" class="col-2 col-form-label">Translation</label>
+            <input
+                    class="form-control"
+                    formControlName="newTranslation"
+                    type="text"
+                    id="newTranslation"
+            >
+            <h4 class="submit-btn-holder">
+                <button
+                        class="btn btn-info"
+                        type="submit"
+                        [disabled]="newCardForm.invalid"
+                >Create
+                </button>
+            </h4>
         </form>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" *ngIf="!reverse">
+        <form [formGroup]="cardForm" (ngSubmit)="check(cardForm)" *ngIf="currentCard">
+            <h2>{{currentCard.word}}</h2>
+            <label for="translation" class="col-2 col-form-label">Translation</label>
+            <input
+                    class="form-control"
+                    type="text"
+                    formControlName="translation"
+                    id="translation"
+            >
+            <div *ngIf="translationError" class="error">{{translationError}}</div>
+        </form>
+    </div>
+
+    <div class="col-md-6" *ngIf="reverse">
+        <form [formGroup]="reverseForm" (ngSubmit)="reverseCheck(reverseForm)" *ngIf="currentCard">
+            <h2>{{currentCard.translation}}</h2>
+            <label for="rTranslation" class="col-2 col-form-label">English:</label>
+            <input
+                class="form-control"
+                type="text"
+                formControlName="rWord"
+                id="rTranslation"
+        >
+            <div *ngIf="translationError" class="error">{{translationError}}</div>
+
+        </form>
+
+    </div>
+
+
 </div>
 
 
