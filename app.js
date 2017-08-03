@@ -41,6 +41,8 @@ app.get('/*', function (req, res) {
     res.sendfile(path.join(__dirname + '/dist/index.html'));
 });
 
+console.log(__dirname + '/dist/index.html')
+
 app.use('/', index);
 app.use('/cards', cards);
 app.use('/infinitives', infinitives);
