@@ -51,9 +51,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/dist')));
 
-app.get('/*', function (req, res) {
-    res.sendfile(path.join(__dirname + '/dist/index.html'));
-});
+// app.get('/*', function (req, res) {
+//     res.sendfile(path.join(__dirname + '/dist/index.html'));
+// });
 
 
 
