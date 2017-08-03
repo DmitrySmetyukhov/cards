@@ -11,6 +11,20 @@ var infinitives = require('./routes/infinitives');
 
 var app = express();
 
+
+const forceSSL = function() {
+    return function (req, res, next) {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect(
+                ['https://', req.get('Host'), req.url].join('')
+            );
+        }
+        next();
+    }
+};
+
+app.use(forceSSL());
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -41,18 +55,7 @@ app.get('/*', function (req, res) {
     res.sendfile(path.join(__dirname + '/dist/index.html'));
 });
 
-const forceSSL = function() {
-    return function (req, res, next) {
-        if (req.headers['x-forwarded-proto'] !== 'https') {
-            return res.redirect(
-                ['https://', req.get('Host'), req.url].join('')
-            );
-        }
-        next();
-    }
-};
 
-app.use(forceSSL());
 
 app.use('/', index);
 app.use('/cards', cards);
