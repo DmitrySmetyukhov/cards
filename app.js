@@ -41,7 +41,18 @@ app.get('/*', function (req, res) {
     res.sendfile(path.join(__dirname + '/dist/index.html'));
 });
 
-console.log(__dirname + '/dist/index.html')
+const forceSSL = function() {
+    return function (req, res, next) {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect(
+                ['https://', req.get('Host'), req.url].join('')
+            );
+        }
+        next();
+    }
+};
+
+app.use(forceSSL());
 
 app.use('/', index);
 app.use('/cards', cards);
