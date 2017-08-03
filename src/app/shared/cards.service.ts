@@ -7,8 +7,8 @@ import {Infinitive} from "./model/infinitive";
 @Injectable()
 
 export class CardsService {
-    private url = 'https://localhost:3000/cards';
-    private infinitivesUrl = 'https://localhost:3000/infinitives';
+    private url = 'http://localhost:3000/cards';
+    private infinitivesUrl = 'http://localhost:3000/infinitives';
 
     constructor(private http: HttpService) {
     }
