@@ -1,7 +1,7 @@
 {
   "port": 3000,
   "mongoose": {
-    "uri": "mongodb://localhost/chat",
+    "uri": "mongodb://dima:777Dima777@ds033086.mlab.com:33086/airlines",
     "options": {
       "useMongoClient": true,
       "server": {
