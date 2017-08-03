@@ -9,11 +9,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot --target=production"
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
-    "@angular/cli": "1.1.0",
+    "@angular/cli": "1.2.6",
     "@angular/compiler-cli": "^4.0.0",
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
@@ -28,7 +28,16 @@
     "core-js": "^2.4.1",
     "ngx-bootstrap": "^1.8.1",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "jade": "~1.11.0",
+    "mongoose": "^4.11.4",
+    "morgan": "~1.8.1",
+    "nconf": "^0.8.4",
+    "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
     "@angular/language-service": "^4.0.0",
