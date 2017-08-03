@@ -3,10 +3,12 @@ import {HttpService} from "./http.service";
 import {Card} from "./model/card";
 import {Observable} from "rxjs";
 import {Response} from "@angular/http";
+import {Infinitive} from "./model/infinitive";
 @Injectable()
 
 export class CardsService {
     private url = 'http://localhost:3000/cards';
+    private infinitivesUrl = 'http://localhost:3000/infinitives';
 
     constructor(private http: HttpService) {
     }
@@ -45,5 +47,14 @@ export class CardsService {
         }
         console.error(message);
         return Observable.throw(message);
+    }
+
+
+    public getAllInfinitives() {
+        return this.http.get(this.infinitivesUrl);
+    }
+
+    public createInfinitive(infinitive: Infinitive) {
+        return this.http.post(this.infinitivesUrl, {infinitive: infinitive})
     }
 }

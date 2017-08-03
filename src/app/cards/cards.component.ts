@@ -22,7 +22,7 @@ export class CardsComponent implements OnInit {
     reverse: boolean;
 
 
-    constructor(private cardsService: CardsService, private fb: FormBuilder,) {
+    constructor(private cardsService: CardsService, private fb: FormBuilder) {
     }
 
     ngOnInit() {
