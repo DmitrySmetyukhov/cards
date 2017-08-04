@@ -52,19 +52,23 @@ export class InfinitivesComponent implements OnInit {
 
     ngOnInit() {
         this.buildForm();
-        this.getRandomInfinitive();
-
-        this.initializeInputsArrays()
+        this.getRandomInfinitive().then(() => {
+            this.initializeInputsArrays()
+        });
     }
 
 
     private getRandomInfinitive() {
-        this.cardsService.getRandomInfinitive().subscribe(
-            (infinitive) => {
-                this.currentInfinitive = infinitive;
-            },
-            (err) => console.log(err, 'err')
-        )
+        return new Promise<any>((resolve, reject) => {
+            this.cardsService.getRandomInfinitive().subscribe(
+                (infinitive) => {
+                    this.currentInfinitive = infinitive;
+                    resolve();
+                },
+                (err) => console.log(err, 'err')
+            )
+        })
+
     }
 
     public onSubmitNew(form) {
