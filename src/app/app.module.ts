@@ -30,11 +30,11 @@ import { InfinitivesComponent } from './infinitives/infinitives.component';
                 pathMatch: 'full'
             },
             {
-                path: 'card',
+                path: 'cards',
                 component: CardsComponent
             },
             {
-                path: 'infinitive',
+                path: 'infinitives',
                 component: InfinitivesComponent
             }
         ])
