@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CardsService} from "../shared/cards.service";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {Infinitive} from "../shared/model/infinitive";
-
+import * as $ from 'jquery';
 @Component({
     selector: 'app-infinitives',
     templateUrl: './infinitives.component.html',
@@ -20,6 +20,9 @@ export class InfinitivesComponent implements OnInit {
     newInfinitive: Infinitive;
     errorCheck = null;
     reverse = null;
+    rInputs;
+    aInputs;
+    nInputs;
 
     constructor(private cardsService: CardsService, private fb: FormBuilder) {
     }
@@ -43,11 +46,15 @@ export class InfinitivesComponent implements OnInit {
             pastSimple: [this.inf2['pastSimple'], [Validators.required]],
             pastParticiple: [this.inf2['pastParticiple'], [Validators.required]]
         })
+
+
     }
 
     ngOnInit() {
         this.buildForm();
         this.getRandomInfinitive();
+
+        this.initializeInputsArrays()
     }
 
 
@@ -89,8 +96,28 @@ export class InfinitivesComponent implements OnInit {
         this.errorCheck = null;
     }
 
-    onKeyDown(form, event) {
+    next(inputsArray) {
+        for (let i = 0; i < inputsArray.length; i++) {
+            if (i == inputsArray.length - 1) return false;
+            if ($(inputsArray[i]).is(':focus')) {
+                $(inputsArray[i + 1]).focus();
+                return true;
+            }
+        }
+    }
+
+    private initializeInputsArrays() {
+        $(document).ready(() => {
+            this.aInputs = $('.a-input');
+            this.rInputs = $('.r-input');
+            this.nInputs = $('.n-input');
+        })
+    }
+
+    onKeyDown(form, event, inputsArray) {
         if (event.key === 'Enter') {
+            if (this.next(inputsArray)) return;
+
             for (let prop in form.value) {
                 if (!form.value[prop]) return;
             }
@@ -105,6 +132,7 @@ export class InfinitivesComponent implements OnInit {
 
     revert() {
         this.reverse = !this.reverse;
+        this.initializeInputsArrays();
     }
 
 }

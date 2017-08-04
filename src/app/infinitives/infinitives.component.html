@@ -15,24 +15,27 @@
   <div class="col-md-3"></div>
   <div class="col-md-6">
 
-    <form [formGroup]="newInfinitiveForm" (ngSubmit)="onSubmitNew(newInfinitiveForm)">
+    <form [formGroup]="newInfinitiveForm"
+          (ngSubmit)="onSubmitNew(newInfinitiveForm)"
+          (keydown)="onKeyDown(rInfinitiveForm, $event, nInputs)"
+    >
       <label for="translation" class="col-2 col-form-label">Translation</label>
       <input
-              class="form-control"
+              class="form-control n-input"
               formControlName="translation"
               id="translation"
               type="text"
       >
       <label for="nInfinitive" class="col-2 col-form-label">Infinitive</label>
       <input
-              class="form-control"
+              class="form-control n-input"
               formControlName="infinitive"
               id="nInfinitive"
               type="text"
       >
       <label for="nPastSimple" class="col-2 col-form-label">Past simple</label>
       <input
-              class="form-control"
+              class="form-control n-input"
               formControlName="pastSimple"
               type="text"
               id="nPastSimple"
@@ -40,7 +43,7 @@
 
       <label for="nPastParticiple" class="col-2 col-form-label">Past participle</label>
       <input
-              class="form-control"
+              class="form-control n-input"
               formControlName="pastParticiple"
               type="text"
               id="nPastParticiple"
@@ -63,20 +66,20 @@
     <form [formGroup]="infinitiveForm"
           (ngSubmit)="onSubmit(infinitiveForm)"
           *ngIf="currentInfinitive"
-          (keydown)="onKeyDown(infinitiveForm, $event)"
+          (keydown)="onKeyDown(infinitiveForm, $event, aInputs)"
     >
       <h1>{{currentInfinitive.translation}}</h1>
       <div class="error" *ngIf="errorCheck">{{errorCheck}}</div>
       <label for="infinitive" class="col-2 col-form-label">Infinitive</label>
       <input
-              class="form-control"
+              class="form-control a-input"
               formControlName="infinitive"
               id="infinitive"
               type="text"
       >
       <label for="pastSimple" class="col-2 col-form-label">Past simple</label>
       <input
-              class="form-control"
+              class="form-control a-input"
               formControlName="pastSimple"
               type="text"
               id="pastSimple"
@@ -84,7 +87,7 @@
 
       <label for="pastParticiple" class="col-2 col-form-label">Past participle</label>
       <input
-              class="form-control"
+              class="form-control a-input"
               formControlName="pastParticiple"
               type="text"
               id="pastParticiple"
@@ -96,20 +99,20 @@
     <form [formGroup]="rInfinitiveForm"
           (ngSubmit)="onSubmit(rInfinitiveForm)"
           *ngIf="currentInfinitive"
-          (keydown)="onKeyDown(rInfinitiveForm, $event)"
+          (keydown)="onKeyDown(rInfinitiveForm, $event, rInputs)"
     >
       <h1>{{currentInfinitive.infinitive}}</h1>
       <div class="error" *ngIf="errorCheck">{{errorCheck}}</div>
       <label for="translation" class="col-2 col-form-label">Translation</label>
       <input
-              class="form-control"
+              class="form-control r-input"
               formControlName="translation"
               id="translation"
               type="text"
       >
       <label for="pastSimple" class="col-2 col-form-label">Past simple</label>
       <input
-              class="form-control"
+              class="form-control r-input"
               formControlName="pastSimple"
               type="text"
               id="pastSimple"
@@ -117,7 +120,7 @@
 
       <label for="pastParticiple" class="col-2 col-form-label">Past participle</label>
       <input
-              class="form-control"
+              class="form-control r-input"
               formControlName="pastParticiple"
               type="text"
               id="pastParticiple"
