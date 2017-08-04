@@ -27,7 +27,7 @@ router.get('/random', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
     console.log(req.body, 'body');
-    new Infinitive(req.body.newInfinitive).save()
+    new Infinitive(req.body.infinitive).save()
         .then((infinitive) => res.send(infinitive))
         .catch((err) => next(err));
 

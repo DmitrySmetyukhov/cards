@@ -12,10 +12,14 @@ export class InfinitivesComponent implements OnInit {
     showCreateForm: boolean;
     newInfinitiveForm: FormGroup;
     infinitiveForm: FormGroup;
+    rInfinitiveForm: FormGroup;
     inf = {};
     inf1 = {};
+    inf2 = {};
     currentInfinitive: Infinitive;
     newInfinitive: Infinitive;
+    errorCheck = null;
+    reverse = null;
 
     constructor(private cardsService: CardsService, private fb: FormBuilder) {
     }
@@ -32,19 +36,31 @@ export class InfinitivesComponent implements OnInit {
             infinitive: [this.inf1['infinitive'], [Validators.required]],
             pastSimple: [this.inf1['pastSimple'], [Validators.required]],
             pastParticiple: [this.inf1['pastParticiple'], [Validators.required]]
+        });
+
+        this.rInfinitiveForm = this.fb.group({
+            translation: [this.inf2['translation'], [Validators.required]],
+            pastSimple: [this.inf2['pastSimple'], [Validators.required]],
+            pastParticiple: [this.inf2['pastParticiple'], [Validators.required]]
         })
     }
 
     ngOnInit() {
         this.buildForm();
-        this.cardsService.getAllInfinitives().subscribe(
-            (all) => console.log(all, 'all'),
+        this.getRandomInfinitive();
+    }
+
+
+    private getRandomInfinitive() {
+        this.cardsService.getRandomInfinitive().subscribe(
+            (infinitive) => {
+                this.currentInfinitive = infinitive;
+            },
             (err) => console.log(err, 'err')
         )
     }
 
     public onSubmitNew(form) {
-        console.log(form, 'form inf new');
         let infinitive = new Infinitive(
             form.value.translation,
             form.value.infinitive,
@@ -52,13 +68,43 @@ export class InfinitivesComponent implements OnInit {
             form.value.pastParticiple
         );
 
-
-        console.log(infinitive, 'infinitive')
-
         this.cardsService.createInfinitive(infinitive).subscribe(
-            (res) => console.log(res, 'res'),
+            (res) => {
+                form.reset();
+            },
             (err) => console.log(err, 'err')
         );
+    }
+
+    public onSubmit(form) {
+        for (let prop in form.value) {
+            if (this.currentInfinitive[prop] !== form.value[prop]) {
+                this.errorCheck = 'error';
+                return;
+            }
+        }
+
+        this.getRandomInfinitive();
+        form.reset();
+        this.errorCheck = null;
+    }
+
+    onKeyDown(form, event) {
+        if (event.key === 'Enter') {
+            for (let prop in form.value) {
+                if (!form.value[prop]) return;
+            }
+
+            this.onSubmit(form);
+        }
+    }
+
+    createNew() {
+        this.showCreateForm = !!this.showCreateForm;
+    }
+
+    revert() {
+        this.reverse = !this.reverse;
     }
 
 }

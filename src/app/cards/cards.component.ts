@@ -58,7 +58,7 @@ export class CardsComponent implements OnInit {
         this.cardsService.createCard(card).subscribe(
             () => {
                 form.reset();
-                this.showCreateForm = null;
+                // this.showCreateForm = null;
             },
             (error) => console.log(error, 'error')
         );

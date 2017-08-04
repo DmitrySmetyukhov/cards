@@ -14,7 +14,7 @@ export class CardsService {
     }
 
     public getAllCards() {
-        return this.http.get(this.url)
+        return this.http.get(this.url);
     }
 
     public getRandomCard(): Observable<Card> {
@@ -54,7 +54,23 @@ export class CardsService {
         return this.http.get(this.infinitivesUrl);
     }
 
+    public getRandomInfinitive() {
+        return this.http.get(this.infinitivesUrl + '/random')
+            .map(this.extractInfinitive)
+            .catch(this.handleError);
+    }
+
     public createInfinitive(infinitive: Infinitive) {
         return this.http.post(this.infinitivesUrl, {infinitive: infinitive})
+    }
+
+    private extractInfinitive(response: Response): Infinitive {
+        try {
+            let res = response.json();
+            let infinitive = new Infinitive(res.translation, res.infinitive, res.pastSimple, res.pastParticiple);
+            return infinitive;
+        } catch (e) {
+            return e;
+        }
     }
 }
