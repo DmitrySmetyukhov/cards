@@ -7,8 +7,8 @@ import {Infinitive} from "./model/infinitive";
 @Injectable()
 
 export class CardsService {
-    private url = 'https://afternoon-fortress-84676.herokuapp.com/cards';
-    private infinitivesUrl = 'https://afternoon-fortress-84676.herokuapp.com/infinitives';
+    private url = 'https://afternoon-fortress-84676.herokuapp.com/card';
+    private infinitivesUrl = 'https://afternoon-fortress-84676.herokuapp.com/infinitive';
 
     constructor(private http: HttpService) {
     }
