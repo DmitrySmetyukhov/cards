@@ -2,14 +2,23 @@
 
     <div class="row">
         <div class="col-md-3">
-            <h2><a [routerLink]="['../infinitives-list']">List</a></h2>
             <h2><a [routerLink]="['../create-infinitives']">Create</a></h2>
-            <button
-                    class="btn btn-link"
-                    (click)="revert()"
-            >Reverse
-            </button>
+            <h2><a [routerLink]="['../infinitives-list']">List</a></h2>
+            <h5>
+                <button
+                        class="btn btn-link"
+                        (click)="revert()"
+                >Reverse
+                </button>
+            </h5>
+            <h5>
+                <button class="btn btn-link" (click)="showHint()">
+                    Show hint
+                </button>
+            </h5>
         </div>
+
+
         <div class="col-md-6" *ngIf="!reverse">
             <form [formGroup]="infinitiveForm"
                   (ngSubmit)="onSubmit(infinitiveForm)"
@@ -44,6 +53,7 @@
                         autocomplete="off"
                 >
             </form>
+
         </div>
 
         <div class="col-md-6" *ngIf="reverse">
@@ -80,6 +90,20 @@
                         autocomplete="off"
                 >
             </form>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" *ngIf="hint">
+            {{currentInfinitive | json}}
         </div>
     </div>
 </div>

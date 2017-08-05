@@ -73,7 +73,8 @@ export class CardsService {
 
 
     public getAllInfinitives() {
-        return this.http.get(this.infinitivesUrl);
+        return this.http.get(this.infinitivesUrl)
+            .map(this.extractInfinitivesArray);
     }
 
 
@@ -85,6 +86,21 @@ export class CardsService {
 
     public createInfinitive(infinitive: Infinitive) {
         return this.http.post(this.infinitivesUrl, {infinitive: infinitive})
+    }
+
+    public deleteInfinitive(_id: string){
+        return this.http.delete(this.infinitivesUrl + '/' + _id)
+            .map((response) => response.json());
+    }
+
+    private extractInfinitivesArray(response: Response): Infinitive[] {
+        try {
+            let res = response.json();
+            return res.map((obj) => new Infinitive(obj.translation, obj.infinitive, obj.pastSimple, obj.pastParticiple, obj._id));
+
+        } catch (e) {
+            return e;
+        }
     }
 
     private extractInfinitive(response: Response): Infinitive {

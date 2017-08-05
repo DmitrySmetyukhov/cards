@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 router.get('/random', function (req, res, next) {
     Infinitive.count().exec(function (err, count) {
 
-        if(err) return next(err);
+        if (err) return next(err);
         // Get a random entry
         let random = Math.floor(Math.random() * count);
 
@@ -26,11 +26,16 @@ router.get('/random', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    console.log(req.body, 'body');
     new Infinitive(req.body.infinitive).save()
         .then((infinitive) => res.send(infinitive))
         .catch((err) => next(err));
 
+});
+
+router.delete('/:id', function (req, res, next) {
+    Infinitive.remove({_id: req.params.id}).then(
+        () => res.send({_id: req.params.id})
+    ).catch((err) => next(err))
 });
 
 module.exports = router;

@@ -1,3 +1,25 @@
-<p>
-  infinitives-list works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <h2><a [routerLink]="['../infinitives']">Infinitives</a></h2>
+      <h2><a [routerLink]="['../create-infinitives']">Create</a></h2>
+
+    </div>
+    <div class="col-md-9">
+      <table class="table table-bordered table-hover">
+        <th>Translation</th>
+        <th>Infinitive</th>
+        <th>Past simple</th>
+        <th>Past participle</th>
+        <th>Delete</th>
+        <tr *ngFor="let i of list">
+          <td>{{i.translation}}</td>
+          <td>{{i.infinitive}}</td>
+          <td>{{i.pastSimple}}</td>
+          <td>{{i.pastParticiple}}</td>
+          <td><button class="btn btn-link" (click)="delete(i._id)">X</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

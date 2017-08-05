@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {CardsService} from "../shared/cards.service";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {Infinitive} from "../shared/model/infinitive";
-import * as $ from 'jquery';
+
 @Component({
     selector: 'app-infinitives',
     templateUrl: './infinitives.component.html',
     styleUrls: ['./infinitives.component.css']
 })
 export class InfinitivesComponent implements OnInit {
-    showCreateForm: boolean;
+
     infinitiveForm: FormGroup;
     rInfinitiveForm: FormGroup;
     inf1 = {};
@@ -19,12 +19,57 @@ export class InfinitivesComponent implements OnInit {
     reverse = null;
     rInputs = [];
     aInputs = [];
+    hint;
+    listenerFn: () => void;
+    pending;
 
 
-    constructor(private cardsService: CardsService, private fb: FormBuilder) {
+    constructor(private cardsService: CardsService, private fb: FormBuilder, private renderer: Renderer2) {
     }
 
-    buildForm() {
+
+    ngOnInit() {
+        this.buildForm();
+        this.getRandomInfinitive().then(() => {
+            this.initializeInputsArrays();
+        });
+
+
+        this.listenerFn = this.renderer.listen('document', 'keydown', (evt) => {
+            this.identKey(evt.key);
+        })
+    }
+
+    ngOnDestroy() {
+        if (this.listenerFn) {
+            this.listenerFn();
+        }
+    }
+
+    private identKey(key: string) {
+        if(key === '6'){
+            this.getRandomInfinitive();
+        }
+    }
+
+
+    private getRandomInfinitive() {
+        if(this.pending) return;
+        return new Promise<any>((resolve, reject) => {
+            this.pending = true;
+            this.cardsService.getRandomInfinitive().subscribe(
+                (infinitive) => {
+                    this.currentInfinitive = infinitive;
+                    resolve();
+                    this.pending = null;
+                },
+                (err) => console.log(err, 'err')
+            )
+        })
+    }
+
+
+    private buildForm() {
 
         this.infinitiveForm = this.fb.group({
             infinitive: [this.inf1['infinitive'], [Validators.required]],
@@ -37,32 +82,9 @@ export class InfinitivesComponent implements OnInit {
             pastSimple: [this.inf2['pastSimple'], [Validators.required]],
             pastParticiple: [this.inf2['pastParticiple'], [Validators.required]]
         })
-
-
     }
 
-    ngOnInit() {
-        this.buildForm();
-        this.getRandomInfinitive().then(() => {
-            this.initializeInputsArrays();
-        });
-    }
-
-
-    private getRandomInfinitive() {
-        return new Promise<any>((resolve, reject) => {
-            this.cardsService.getRandomInfinitive().subscribe(
-                (infinitive) => {
-                    this.currentInfinitive = infinitive;
-                    resolve();
-                },
-                (err) => console.log(err, 'err')
-            )
-        })
-
-    }
-
-    public onSubmit(form) {
+    private onSubmit(form) {
         for (let prop in form.value) {
             if (this.currentInfinitive[prop].trim() !== form.value[prop].trim()) {
                 this.errorCheck = 'error';
@@ -73,6 +95,7 @@ export class InfinitivesComponent implements OnInit {
         this.getRandomInfinitive();
         form.reset();
         this.errorCheck = null;
+        this.hint = null;
     }
 
     private initializeInputsArrays() {
@@ -80,16 +103,20 @@ export class InfinitivesComponent implements OnInit {
         this.cardsService.initializeInputsArray(this.rInputs, '.r-input');
     }
 
-    keyDown(form, event, inputsArray) {
-        if(this.cardsService.infinitivesFormKeyDown(form, event, inputsArray)){
+    private keyDown(form, event, inputsArray) {
+        if (this.cardsService.infinitivesFormKeyDown(form, event, inputsArray)) {
             this.onSubmit(form);
         }
     }
 
 
-    revert() {
+    private revert() {
         this.reverse = !this.reverse;
         this.initializeInputsArrays();
+    }
+
+    private showHint() {
+        this.hint = !this.hint;
     }
 
 }
