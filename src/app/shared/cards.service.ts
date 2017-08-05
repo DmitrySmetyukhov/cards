@@ -15,8 +15,16 @@ export class CardsService {
     constructor(private http: HttpService) {
     }
 
+    public deleteCard(id) {
+        return this.http.delete(this.url + '/' + id)
+            .map(this.extractCards);
+    }
+
+
+
     public getAllCards() {
-        return this.http.get(this.url);
+        return this.http.get(this.url)
+            .map(this.extractCards);
     }
 
     public getRandomCard(): Observable<Card> {
@@ -27,6 +35,16 @@ export class CardsService {
 
     public createCard(card: Card) {
         return this.http.post(this.url, {newCard: card})
+    }
+
+
+    private extractCards(response: Response) {
+        try {
+            let res = response.json();
+            return res;
+        } catch (e) {
+            return e;
+        }
     }
 
     private extractCard(response: Response): Card {

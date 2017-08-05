@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 router.get('/random', function (req, res, next) {
     Card.count().exec(function (err, count) {
 
-        if(err) return next(err);
+        if (err) return next(err);
         // Get a random entry
         let random = Math.floor(Math.random() * count);
 
@@ -32,6 +32,16 @@ router.post('/', function (req, res, next) {
         .then((card) => res.send(card))
         .catch((err) => next(err));
 
+});
+
+router.delete('/:id', function (req, res, next) {
+    Card.remove({
+        _id : req.params.id
+    }).then(
+        () => res.send({id: req.params.id})
+    ).catch(
+        (err) => next(err)
+    );
 });
 
 module.exports = router;
