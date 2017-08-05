@@ -26,7 +26,7 @@ export class CreateInfinitivesComponent implements OnInit {
             translation: [this.infinitive.translation, [Validators.required]]
         });
 
-        this.cardsService.initializeInputsArray(this.nInputs);
+        this.cardsService.initializeInputsArray(this.nInputs, '.n-input');
     }
 
 

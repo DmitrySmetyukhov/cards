@@ -5,7 +5,6 @@ import {CardsService} from "../../shared/cards.service";
 import {Card} from "../../shared/model/card";
 
 
-
 @Component({
     selector: 'app-create-cards',
     templateUrl: 'create-cards.component.html',
@@ -19,8 +18,7 @@ export class CreateCardsComponent implements OnInit {
     };
 
     constructor(private cardsService: CardsService,
-                private fb: FormBuilder,
-                private router: Router) {
+                private fb: FormBuilder) {
     }
 
     ngOnInit() {
@@ -34,10 +32,7 @@ export class CreateCardsComponent implements OnInit {
     onSubmitNew(form) {
         let card = new Card(form.value.newWord.trim(), form.value.newTranslation.trim());
         this.cardsService.createCard(card).subscribe(
-            () => {
-                form.reset();
-                // this.showCreateForm = null;
-            },
+            () => form.reset(),
             (error) => console.log(error, 'error')
         );
     }

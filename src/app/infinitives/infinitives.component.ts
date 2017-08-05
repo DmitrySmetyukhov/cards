@@ -10,30 +10,21 @@ import * as $ from 'jquery';
 })
 export class InfinitivesComponent implements OnInit {
     showCreateForm: boolean;
-    // newInfinitiveForm: FormGroup;
     infinitiveForm: FormGroup;
     rInfinitiveForm: FormGroup;
-    inf = {};
     inf1 = {};
     inf2 = {};
     currentInfinitive: Infinitive;
-    newInfinitive: Infinitive;
     errorCheck = null;
     reverse = null;
-    rInputs;
-    aInputs;
-    nInputs;
+    rInputs = [];
+    aInputs = [];
+
 
     constructor(private cardsService: CardsService, private fb: FormBuilder) {
     }
 
     buildForm() {
-        // this.newInfinitiveForm = this.fb.group({
-        //     infinitive: [this.inf['infinitive'], [Validators.required]],
-        //     pastSimple: [this.inf['pastSimple'], [Validators.required]],
-        //     pastParticiple: [this.inf['pastParticiple'], [Validators.required]],
-        //     translation: [this.inf['translation'], [Validators.required]]
-        // });
 
         this.infinitiveForm = this.fb.group({
             infinitive: [this.inf1['infinitive'], [Validators.required]],
@@ -53,7 +44,7 @@ export class InfinitivesComponent implements OnInit {
     ngOnInit() {
         this.buildForm();
         this.getRandomInfinitive().then(() => {
-            this.initializeInputsArrays()
+            this.initializeInputsArrays();
         });
     }
 
@@ -71,25 +62,9 @@ export class InfinitivesComponent implements OnInit {
 
     }
 
-    // public onSubmitNew(form) {
-    //     let infinitive = new Infinitive(
-    //         form.value.translation.trim(),
-    //         form.value.infinitive.trim(),
-    //         form.value.pastSimple.trim(),
-    //         form.value.pastParticiple.trim()
-    //     );
-    //
-    //     this.cardsService.createInfinitive(infinitive).subscribe(
-    //         (res) => {
-    //             form.reset();
-    //         },
-    //         (err) => console.log(err, 'err')
-    //     );
-    // }
-
     public onSubmit(form) {
         for (let prop in form.value) {
-            if (this.currentInfinitive[prop] !== form.value[prop]) {
+            if (this.currentInfinitive[prop].trim() !== form.value[prop].trim()) {
                 this.errorCheck = 'error';
                 return;
             }
@@ -100,39 +75,17 @@ export class InfinitivesComponent implements OnInit {
         this.errorCheck = null;
     }
 
-    next(inputsArray) {
-        for (let i = 0; i < inputsArray.length; i++) {
-            if (i == inputsArray.length - 1) return false;
-            if ($(inputsArray[i]).is(':focus')) {
-                $(inputsArray[i + 1]).focus();
-                return true;
-            }
-        }
-    }
-
     private initializeInputsArrays() {
-        $(document).ready(() => {
-            this.aInputs = $('.a-input');
-            this.rInputs = $('.r-input');
-            this.nInputs = $('.n-input');
-        })
+        this.cardsService.initializeInputsArray(this.aInputs, '.a-input');
+        this.cardsService.initializeInputsArray(this.rInputs, '.r-input');
     }
 
-    onKeyDown(form, event, inputsArray) {
-        if (event.key === 'Enter') {
-            if (this.next(inputsArray)) return;
-
-            for (let prop in form.value) {
-                if (!form.value[prop]) return;
-            }
-
+    keyDown(form, event, inputsArray) {
+        if(this.cardsService.infinitivesFormKeyDown(form, event, inputsArray)){
             this.onSubmit(form);
         }
     }
 
-    createNew() {
-        this.showCreateForm = !this.showCreateForm;
-    }
 
     revert() {
         this.reverse = !this.reverse;

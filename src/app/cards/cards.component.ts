@@ -45,12 +45,10 @@ export class CardsComponent implements OnInit {
 
 
     check(form) {
-        let translation = form.value.translation;
-        if (translation == this.currentCard.translation) {
+        if (form.value.translation.trim() == this.currentCard.translation) {
             this.translationError = null;
             form.reset();
             this.translation = null;
-
             this.cardsService.getRandomCard().subscribe(
                 (card) => this.currentCard = card,
                 (error) => console.log(error, 'error')

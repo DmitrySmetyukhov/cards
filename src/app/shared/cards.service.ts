@@ -108,9 +108,9 @@ export class CardsService {
         }
     }
 
-    public initializeInputsArray(array) {
+    public initializeInputsArray(array, inputsClass) {
         $(document).ready(() => {
-            let inputs = $('.n-input');
+            let inputs = $(inputsClass);
             inputs.map((id, el) => {
                 array.push(el);
             })
