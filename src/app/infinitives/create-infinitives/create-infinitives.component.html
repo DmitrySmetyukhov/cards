@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <h2><a [routerLink]="['../infinitives']">Infinitives</a></h2>
+      <h2><a [routerLink]="['../infinitives-list']">List</a></h2>
+
+    </div>
+    <div class="col-md-6">
+
+      <form [formGroup]="newInfinitiveForm"
+            (ngSubmit)="onSubmitNew(newInfinitiveForm)"
+            (keydown)="keyDown(newInfinitiveForm, $event, nInputs)"
+      >
+        <label for="translation" class="col-2 col-form-label">Translation</label>
+        <input
+                class="form-control n-input"
+                formControlName="translation"
+                id="translation"
+                type="text"
+        >
+        <label for="nInfinitive" class="col-2 col-form-label">Infinitive</label>
+        <input
+                class="form-control n-input"
+                formControlName="infinitive"
+                id="nInfinitive"
+                type="text"
+        >
+        <label for="nPastSimple" class="col-2 col-form-label">Past simple</label>
+        <input
+                class="form-control n-input"
+                formControlName="pastSimple"
+                type="text"
+                id="nPastSimple"
+        >
+
+        <label for="nPastParticiple" class="col-2 col-form-label">Past participle</label>
+        <input
+                class="form-control n-input"
+                formControlName="pastParticiple"
+                type="text"
+                id="nPastParticiple"
+        >
+      </form>
+    </div>
+  </div>
+</div>

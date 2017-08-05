@@ -4,128 +4,130 @@
 >Reverse
 </button>
 <h2>
-  <button
-          class="btn btn-link"
-          (click)="createNew()"
-  ><span *ngIf="!showCreateForm">Create new</span>
-    <span *ngIf="showCreateForm">Close create form</span>
-  </button>
+    <button
+            class="btn btn-link"
+            (click)="createNew()"
+    ><span *ngIf="!showCreateForm">Create new</span>
+        <span *ngIf="showCreateForm">Close create form</span>
+    </button>
 </h2>
 
-<div class="form-group row">
-  <div class="col-md-3"></div>
-  <div class="col-md-6" *ngIf="showCreateForm">
+<a [routerLink]="['../create-infinitives']">create*</a>
 
-    <form [formGroup]="newInfinitiveForm"
-          (ngSubmit)="onSubmitNew(newInfinitiveForm)"
-          (keydown)="onKeyDown(rInfinitiveForm, $event, nInputs)"
-    >
-      <label for="translation" class="col-2 col-form-label">Translation</label>
-      <input
-              class="form-control n-input"
-              formControlName="translation"
-              id="translation"
-              type="text"
-      >
-      <label for="nInfinitive" class="col-2 col-form-label">Infinitive</label>
-      <input
-              class="form-control n-input"
-              formControlName="infinitive"
-              id="nInfinitive"
-              type="text"
-      >
-      <label for="nPastSimple" class="col-2 col-form-label">Past simple</label>
-      <input
-              class="form-control n-input"
-              formControlName="pastSimple"
-              type="text"
-              id="nPastSimple"
-      >
+<!--<div class="row">-->
+    <!--<div class="col-md-3"></div>-->
+    <!--<div class="col-md-6" *ngIf="showCreateForm">-->
 
-      <label for="nPastParticiple" class="col-2 col-form-label">Past participle</label>
-      <input
-              class="form-control n-input"
-              formControlName="pastParticiple"
-              type="text"
-              id="nPastParticiple"
-      >
-      <h4 class="submit-btn-holder">
-        <button
-                class="btn btn-info"
-                type="submit"
-                [disabled]="newInfinitiveForm.invalid"
-        >Create
-        </button>
-      </h4>
-    </form>
-  </div>
-</div>
+        <!--<form [formGroup]="newInfinitiveForm"-->
+              <!--(ngSubmit)="onSubmitNew(newInfinitiveForm)"-->
+              <!--(keydown)="onKeyDown(rInfinitiveForm, $event, nInputs)"-->
+        <!--&gt;-->
+            <!--<label for="translation" class="col-2 col-form-label">Translation</label>-->
+            <!--<input-->
+                    <!--class="form-control n-input"-->
+                    <!--formControlName="translation"-->
+                    <!--id="translation"-->
+                    <!--type="text"-->
+            <!--&gt;-->
+            <!--<label for="nInfinitive" class="col-2 col-form-label">Infinitive</label>-->
+            <!--<input-->
+                    <!--class="form-control n-input"-->
+                    <!--formControlName="infinitive"-->
+                    <!--id="nInfinitive"-->
+                    <!--type="text"-->
+            <!--&gt;-->
+            <!--<label for="nPastSimple" class="col-2 col-form-label">Past simple</label>-->
+            <!--<input-->
+                    <!--class="form-control n-input"-->
+                    <!--formControlName="pastSimple"-->
+                    <!--type="text"-->
+                    <!--id="nPastSimple"-->
+            <!--&gt;-->
+
+            <!--<label for="nPastParticiple" class="col-2 col-form-label">Past participle</label>-->
+            <!--<input-->
+                    <!--class="form-control n-input"-->
+                    <!--formControlName="pastParticiple"-->
+                    <!--type="text"-->
+                    <!--id="nPastParticiple"-->
+            <!--&gt;-->
+            <!--<h4 class="submit-btn-holder">-->
+                <!--<button-->
+                        <!--class="btn btn-info"-->
+                        <!--type="submit"-->
+                        <!--[disabled]="newInfinitiveForm.invalid"-->
+                <!--&gt;Create-->
+                <!--</button>-->
+            <!--</h4>-->
+        <!--</form>-->
+    <!--</div>-->
+<!--</div>-->
 
 <div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-6" *ngIf="!reverse && !showCreateForm">
-    <form [formGroup]="infinitiveForm"
-          (ngSubmit)="onSubmit(infinitiveForm)"
-          *ngIf="currentInfinitive"
-          (keydown)="onKeyDown(infinitiveForm, $event, aInputs)"
-    >
-      <h1>{{currentInfinitive.translation}}</h1>
-      <div class="error" *ngIf="errorCheck">{{errorCheck}}</div>
-      <label for="infinitive" class="col-2 col-form-label">Infinitive</label>
-      <input
-              class="form-control a-input"
-              formControlName="infinitive"
-              id="infinitive"
-              type="text"
-      >
-      <label for="pastSimple" class="col-2 col-form-label">Past simple</label>
-      <input
-              class="form-control a-input"
-              formControlName="pastSimple"
-              type="text"
-              id="pastSimple"
-      >
+    <div class="col-md-3"></div>
+    <div class="col-md-6" *ngIf="!reverse && !showCreateForm">
+        <form [formGroup]="infinitiveForm"
+              (ngSubmit)="onSubmit(infinitiveForm)"
+              *ngIf="currentInfinitive"
+              (keydown)="onKeyDown(infinitiveForm, $event, aInputs)"
+        >
+            <h1>{{currentInfinitive.translation}}</h1>
+            <div class="error" *ngIf="errorCheck">{{errorCheck}}</div>
+            <label for="infinitive" class="col-2 col-form-label">Infinitive</label>
+            <input
+                    class="form-control a-input"
+                    formControlName="infinitive"
+                    id="infinitive"
+                    type="text"
+            >
+            <label for="pastSimple" class="col-2 col-form-label">Past simple</label>
+            <input
+                    class="form-control a-input"
+                    formControlName="pastSimple"
+                    type="text"
+                    id="pastSimple"
+            >
 
-      <label for="pastParticiple" class="col-2 col-form-label">Past participle</label>
-      <input
-              class="form-control a-input"
-              formControlName="pastParticiple"
-              type="text"
-              id="pastParticiple"
-      >
-    </form>
-  </div>
+            <label for="pastParticiple" class="col-2 col-form-label">Past participle</label>
+            <input
+                    class="form-control a-input"
+                    formControlName="pastParticiple"
+                    type="text"
+                    id="pastParticiple"
+            >
+        </form>
+    </div>
 
-  <div class="col-md-6" *ngIf="reverse && !showCreateForm">
-    <form [formGroup]="rInfinitiveForm"
-          (ngSubmit)="onSubmit(rInfinitiveForm)"
-          *ngIf="currentInfinitive"
-          (keydown)="onKeyDown(rInfinitiveForm, $event, rInputs)"
-    >
-      <h1>{{currentInfinitive.infinitive}}</h1>
-      <div class="error" *ngIf="errorCheck">{{errorCheck}}</div>
-      <label for="translation" class="col-2 col-form-label">Translation</label>
-      <input
-              class="form-control r-input"
-              formControlName="translation"
-              id="translation"
-              type="text"
-      >
-      <label for="pastSimple" class="col-2 col-form-label">Past simple</label>
-      <input
-              class="form-control r-input"
-              formControlName="pastSimple"
-              type="text"
-              id="pastSimple"
-      >
+    <div class="col-md-6" *ngIf="reverse && !showCreateForm">
+        <form [formGroup]="rInfinitiveForm"
+              (ngSubmit)="onSubmit(rInfinitiveForm)"
+              *ngIf="currentInfinitive"
+              (keydown)="onKeyDown(rInfinitiveForm, $event, rInputs)"
+        >
+            <h1>{{currentInfinitive.infinitive}}</h1>
+            <div class="error" *ngIf="errorCheck">{{errorCheck}}</div>
+            <label for="translation" class="col-2 col-form-label">Translation</label>
+            <input
+                    class="form-control r-input"
+                    formControlName="translation"
+                    id="translation"
+                    type="text"
+            >
+            <label for="pastSimple" class="col-2 col-form-label">Past simple</label>
+            <input
+                    class="form-control r-input"
+                    formControlName="pastSimple"
+                    type="text"
+                    id="pastSimple"
+            >
 
-      <label for="pastParticiple" class="col-2 col-form-label">Past participle</label>
-      <input
-              class="form-control r-input"
-              formControlName="pastParticiple"
-              type="text"
-              id="pastParticiple"
-      >
-    </form>
-  </div>
+            <label for="pastParticiple" class="col-2 col-form-label">Past participle</label>
+            <input
+                    class="form-control r-input"
+                    formControlName="pastParticiple"
+                    type="text"
+                    id="pastParticiple"
+            >
+        </form>
+    </div>
 </div>

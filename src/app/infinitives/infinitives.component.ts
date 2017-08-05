@@ -10,7 +10,7 @@ import * as $ from 'jquery';
 })
 export class InfinitivesComponent implements OnInit {
     showCreateForm: boolean;
-    newInfinitiveForm: FormGroup;
+    // newInfinitiveForm: FormGroup;
     infinitiveForm: FormGroup;
     rInfinitiveForm: FormGroup;
     inf = {};
@@ -28,12 +28,12 @@ export class InfinitivesComponent implements OnInit {
     }
 
     buildForm() {
-        this.newInfinitiveForm = this.fb.group({
-            infinitive: [this.inf['infinitive'], [Validators.required]],
-            pastSimple: [this.inf['pastSimple'], [Validators.required]],
-            pastParticiple: [this.inf['pastParticiple'], [Validators.required]],
-            translation: [this.inf['translation'], [Validators.required]]
-        });
+        // this.newInfinitiveForm = this.fb.group({
+        //     infinitive: [this.inf['infinitive'], [Validators.required]],
+        //     pastSimple: [this.inf['pastSimple'], [Validators.required]],
+        //     pastParticiple: [this.inf['pastParticiple'], [Validators.required]],
+        //     translation: [this.inf['translation'], [Validators.required]]
+        // });
 
         this.infinitiveForm = this.fb.group({
             infinitive: [this.inf1['infinitive'], [Validators.required]],
@@ -71,21 +71,21 @@ export class InfinitivesComponent implements OnInit {
 
     }
 
-    public onSubmitNew(form) {
-        let infinitive = new Infinitive(
-            form.value.translation.trim(),
-            form.value.infinitive.trim(),
-            form.value.pastSimple.trim(),
-            form.value.pastParticiple.trim()
-        );
-
-        this.cardsService.createInfinitive(infinitive).subscribe(
-            (res) => {
-                form.reset();
-            },
-            (err) => console.log(err, 'err')
-        );
-    }
+    // public onSubmitNew(form) {
+    //     let infinitive = new Infinitive(
+    //         form.value.translation.trim(),
+    //         form.value.infinitive.trim(),
+    //         form.value.pastSimple.trim(),
+    //         form.value.pastParticiple.trim()
+    //     );
+    //
+    //     this.cardsService.createInfinitive(infinitive).subscribe(
+    //         (res) => {
+    //             form.reset();
+    //         },
+    //         (err) => console.log(err, 'err')
+    //     );
+    // }
 
     public onSubmit(form) {
         for (let prop in form.value) {

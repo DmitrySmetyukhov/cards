@@ -13,6 +13,8 @@ import {HttpModule} from "@angular/http";
 import {InfinitivesComponent} from './infinitives/infinitives.component';
 import {CardsListComponent} from './cards/cards-list/cards-list.component';
 import {CreateCardsComponent} from './cards/create-cards/create-cards.component';
+import {CreateInfinitivesComponent} from './infinitives/create-infinitives/create-infinitives.component';
+import {InfinitivesListComponent} from './infinitives/infinitives-list/infinitives-list.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import {CreateCardsComponent} from './cards/create-cards/create-cards.component'
         CardsComponent,
         InfinitivesComponent,
         CardsListComponent,
-        CreateCardsComponent
+        CreateCardsComponent,
+        CreateInfinitivesComponent,
+        InfinitivesListComponent
     ],
     imports: [
         BrowserModule,
@@ -48,6 +52,14 @@ import {CreateCardsComponent} from './cards/create-cards/create-cards.component'
             {
                 path: 'infinitives',
                 component: InfinitivesComponent
+            },
+            {
+                path: 'create-infinitives',
+                component: CreateInfinitivesComponent
+            },
+            {
+                path: 'infinitives-list',
+                component: InfinitivesListComponent
             }
         ])
     ],

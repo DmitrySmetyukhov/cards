@@ -4,6 +4,9 @@ import {Card} from "./model/card";
 import {Observable} from "rxjs";
 import {Response} from "@angular/http";
 import {Infinitive} from "./model/infinitive";
+import * as $ from 'jquery';
+
+
 @Injectable()
 
 export class CardsService {
@@ -19,7 +22,6 @@ export class CardsService {
         return this.http.delete(this.url + '/' + id)
             .map(this.extractCards);
     }
-
 
 
     public getAllCards() {
@@ -74,6 +76,7 @@ export class CardsService {
         return this.http.get(this.infinitivesUrl);
     }
 
+
     public getRandomInfinitive() {
         return this.http.get(this.infinitivesUrl + '/random')
             .map(this.extractInfinitive)
@@ -91,6 +94,37 @@ export class CardsService {
             return infinitive;
         } catch (e) {
             return e;
+        }
+    }
+
+
+    public nextInputFocus(inputsArray) {
+        for (let i = 0; i < inputsArray.length; i++) {
+            if (i == inputsArray.length - 1) return false;
+            if ($(inputsArray[i]).is(':focus')) {
+                $(inputsArray[i + 1]).focus();
+                return true;
+            }
+        }
+    }
+
+    public initializeInputsArray(array) {
+        $(document).ready(() => {
+            let inputs = $('.n-input');
+            inputs.map((id, el) => {
+                array.push(el);
+            })
+        })
+    }
+
+    infinitivesFormKeyDown(form, event, inputsArray) {
+        if (event.key === 'Enter') {
+            if (this.nextInputFocus(inputsArray)) return false;
+
+            for (let prop in form.value) {
+                if (!form.value[prop]) return false;
+            }
+            return true;
         }
     }
 }
