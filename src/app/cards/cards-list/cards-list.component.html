@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row">
+
+
+    <div class="col-md-3">
+      <h2><a [routerLink]="['../cards']">Cards</a></h2>
+      <h2><a [routerLink]="['../create-cards']">Create</a></h2>
+    </div>
+    <div class="col-md-6">
+      all
+      <div class="row" *ngFor="let card of cardsList">
+        <div class="col-md-2">{{card.word}}</div>
+        <div class="col-md-2">{{card.translation}}</div>
+        <div class="col-md-2"><button class="btn btn-link" (click)="deleteCard(card)">delete</button></div>
+      </div>
+    </div>
+  </div>
+</div>

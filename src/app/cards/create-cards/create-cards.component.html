@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <h2><a [routerLink]="['../cards']">Cards</a></h2>
+            <h2><a [routerLink]="['../cards-list']">Cards list</a></h2>
+        </div>
+        <div class="col-md-6">
+
+            <form [formGroup]="newCardForm" (ngSubmit)="onSubmitNew(newCardForm)">
+                <label for="newWord" class="col-2 col-form-label">Word</label>
+                <input
+                        class="form-control"
+                        formControlName="newWord"
+                        id="newWord"
+                        type="text"
+                >
+                <label for="newTranslation" class="col-2 col-form-label">Translation</label>
+                <input
+                        class="form-control"
+                        formControlName="newTranslation"
+                        type="text"
+                        id="newTranslation"
+                >
+                <h4 class="submit-btn-holder">
+                    <button
+                            class="btn btn-info"
+                            type="submit"
+                            [disabled]="newCardForm.invalid"
+                    >Create
+                    </button>
+                </h4>
+            </form>
+        </div>
+    </div>
+</div>
