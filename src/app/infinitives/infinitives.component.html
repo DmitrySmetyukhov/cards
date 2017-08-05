@@ -7,13 +7,14 @@
   <button
           class="btn btn-link"
           (click)="createNew()"
-  >Create new
+  ><span *ngIf="!showCreateForm">Create new</span>
+    <span *ngIf="showCreateForm">Close create form</span>
   </button>
 </h2>
 
 <div class="form-group row">
   <div class="col-md-3"></div>
-  <div class="col-md-6">
+  <div class="col-md-6" *ngIf="showCreateForm">
 
     <form [formGroup]="newInfinitiveForm"
           (ngSubmit)="onSubmitNew(newInfinitiveForm)"
@@ -62,7 +63,7 @@
 
 <div class="row">
   <div class="col-md-3"></div>
-  <div class="col-md-6" *ngIf="!reverse">
+  <div class="col-md-6" *ngIf="!reverse && !showCreateForm">
     <form [formGroup]="infinitiveForm"
           (ngSubmit)="onSubmit(infinitiveForm)"
           *ngIf="currentInfinitive"
@@ -95,7 +96,7 @@
     </form>
   </div>
 
-  <div class="col-md-6" *ngIf="reverse">
+  <div class="col-md-6" *ngIf="reverse && !showCreateForm">
     <form [formGroup]="rInfinitiveForm"
           (ngSubmit)="onSubmit(rInfinitiveForm)"
           *ngIf="currentInfinitive"

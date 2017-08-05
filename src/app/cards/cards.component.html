@@ -7,8 +7,11 @@
     <button
             class="btn btn-link"
             (click)="createNew()"
-    >Create new
+    >
+        <span *ngIf="!showCreateForm">Create new</span>
+        <span *ngIf="showCreateForm">Close create form</span>
     </button>
+
 </h2>
 <div class="form-group row">
     <div class="col-md-3"></div>
@@ -42,7 +45,7 @@
 </div>
 <div class="row">
     <div class="col-md-3"></div>
-    <div class="col-md-6" *ngIf="!reverse">
+    <div class="col-md-6" *ngIf="!reverse && !showCreateForm">
         <form [formGroup]="cardForm" (ngSubmit)="check(cardForm)" *ngIf="currentCard">
             <h2>{{currentCard.word}}</h2>
             <label for="translation" class="col-2 col-form-label">Translation</label>
@@ -56,16 +59,16 @@
         </form>
     </div>
 
-    <div class="col-md-6" *ngIf="reverse">
+    <div class="col-md-6" *ngIf="reverse && !showCreateForm">
         <form [formGroup]="reverseForm" (ngSubmit)="reverseCheck(reverseForm)" *ngIf="currentCard">
             <h2>{{currentCard.translation}}</h2>
             <label for="rTranslation" class="col-2 col-form-label">English:</label>
             <input
-                class="form-control"
-                type="text"
-                formControlName="rWord"
-                id="rTranslation"
-        >
+                    class="form-control"
+                    type="text"
+                    formControlName="rWord"
+                    id="rTranslation"
+            >
             <div *ngIf="translationError" class="error">{{translationError}}</div>
 
         </form>

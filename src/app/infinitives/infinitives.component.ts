@@ -73,10 +73,10 @@ export class InfinitivesComponent implements OnInit {
 
     public onSubmitNew(form) {
         let infinitive = new Infinitive(
-            form.value.translation,
-            form.value.infinitive,
-            form.value.pastSimple,
-            form.value.pastParticiple
+            form.value.translation.trim(),
+            form.value.infinitive.trim(),
+            form.value.pastSimple.trim(),
+            form.value.pastParticiple.trim()
         );
 
         this.cardsService.createInfinitive(infinitive).subscribe(
@@ -131,7 +131,7 @@ export class InfinitivesComponent implements OnInit {
     }
 
     createNew() {
-        this.showCreateForm = !!this.showCreateForm;
+        this.showCreateForm = !this.showCreateForm;
     }
 
     revert() {
