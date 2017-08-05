@@ -10,10 +10,10 @@ import * as $ from 'jquery';
 @Injectable()
 
 export class CardsService {
-    // private url = 'https://afternoon-fortress-84676.herokuapp.com/card';
-    // private infinitivesUrl = 'https://afternoon-fortress-84676.herokuapp.com/infinitive';
-    private url = 'http://localhost:3000/card';
-    private infinitivesUrl = 'http://localhost:3000/infinitive';
+    private url = 'https://afternoon-fortress-84676.herokuapp.com/card';
+    private infinitivesUrl = 'https://afternoon-fortress-84676.herokuapp.com/infinitive';
+    // private url = 'http://localhost:3000/card';
+    // private infinitivesUrl = 'http://localhost:3000/infinitive';
 
     constructor(private http: HttpService) {
     }

@@ -12,18 +12,18 @@ var infinitives = require('./routes/infinitives');
 var app = express();
 
 
-// const forceSSL = function() {
-//     return function (req, res, next) {
-//         if (!req.headers['x-forwarded-proto'] || req.headers['x-forwarded-proto'] !== 'https') {
-//             return res.redirect(
-//                 ['https://', req.get('Host'), req.url].join('')
-//             );
-//         }
-//         next();
-//     }
-// };
+const forceSSL = function() {
+    return function (req, res, next) {
+        if (!req.headers['x-forwarded-proto'] || req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect(
+                ['https://', req.get('Host'), req.url].join('')
+            );
+        }
+        next();
+    }
+};
 
-// app.use(forceSSL());
+app.use(forceSSL());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -59,9 +59,9 @@ app.use('/', index);
 app.use('/card', cards);
 app.use('/infinitive', infinitives);
 
-// app.get('/*', function (req, res) {
-//     res.sendfile(path.join(__dirname + '/dist/index.html'));
-// });
+app.get('/*', function (req, res) {
+    res.sendfile(path.join(__dirname + '/dist/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

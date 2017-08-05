@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {CardsService} from "../shared/cards.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Card} from "../shared/model/card";
@@ -17,10 +17,11 @@ export class CardsComponent implements OnInit {
     currentCard: Card;
     translationError: string;
     reverse: boolean;
-
+    listenerFn: () => void;
+    pending;
 
     constructor(private cardsService: CardsService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder, private renderer: Renderer2) {
     }
 
     ngOnInit() {
@@ -28,7 +29,17 @@ export class CardsComponent implements OnInit {
         this.cardsService.getRandomCard().subscribe(
             (card) => this.currentCard = card,
             (err) => console.log(err, 'error')
-        )
+        );
+
+        this.listenerFn = this.renderer.listen('document', 'keydown', (evt) => {
+            this.identKey(evt.key);
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.listenerFn) {
+            this.listenerFn();
+        }
     }
 
     buildForm() {
@@ -41,6 +52,28 @@ export class CardsComponent implements OnInit {
             rWord: [this.rWord, [Validators.required]]
         });
 
+    }
+
+    private identKey(key: string) {
+        if (key === '6') {
+            this.getRandomCard();
+        }
+    }
+
+
+    private getRandomCard() {
+        if(this.pending) return;
+        return new Promise<any>((resolve, reject) => {
+            this.pending = true;
+            this.cardsService.getRandomCard().subscribe(
+                (card) => {
+                    this.currentCard = card;
+                    resolve();
+                    this.pending = null;
+                },
+                (err) => console.log(err, 'err')
+            )
+        })
     }
 
 
