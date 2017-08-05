@@ -30,7 +30,7 @@ export class CreateInfinitivesComponent implements OnInit {
     }
 
 
-    private onSubmitNew(form) {
+    onSubmitNew(form) {
         let infinitive = new Infinitive(
             form.value.translation.trim(),
             form.value.infinitive.trim(),

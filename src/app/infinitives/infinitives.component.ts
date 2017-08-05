@@ -110,12 +110,12 @@ export class InfinitivesComponent implements OnInit {
     }
 
 
-    private revert() {
+    revert() {
         this.reverse = !this.reverse;
         this.initializeInputsArrays();
     }
 
-    private showHint() {
+    showHint() {
         this.hint = !this.hint;
     }
 
