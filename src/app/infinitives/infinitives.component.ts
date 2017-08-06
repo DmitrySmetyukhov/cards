@@ -60,7 +60,9 @@ export class InfinitivesComponent implements OnInit {
             this.pending = true;
             this.cardsService.getRandomInfinitive().subscribe(
                 (infinitive) => {
-                    this.currentInfinitive = infinitive;
+                    if(infinitive){
+                        this.currentInfinitive = infinitive;
+                    }
                     resolve();
                     this.pending = null;
                 },
