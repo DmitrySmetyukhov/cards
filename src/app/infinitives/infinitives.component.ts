@@ -47,7 +47,7 @@ export class InfinitivesComponent implements OnInit {
     }
 
     private identKey(event) {
-        if(event.key === '6'){
+        if (event.key === '6') {
             event.preventDefault();
             this.getRandomInfinitive();
         }
@@ -55,14 +55,12 @@ export class InfinitivesComponent implements OnInit {
 
 
     private getRandomInfinitive() {
-        if(this.pending) return;
+        if (this.pending) return;
         return new Promise<any>((resolve, reject) => {
             this.pending = true;
             this.cardsService.getRandomInfinitive().subscribe(
                 (infinitive) => {
-                    if(infinitive){
-                        this.currentInfinitive = infinitive;
-                    }
+                    this.currentInfinitive = infinitive;
                     resolve();
                     this.pending = null;
                 },
