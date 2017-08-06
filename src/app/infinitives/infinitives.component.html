@@ -19,7 +19,7 @@
         </div>
 
 
-        <div class="col-md-6" *ngIf="!reverse">
+        <div class="col-md-6" *ngIf="!reverse && currentInfinitive">
             <form [formGroup]="infinitiveForm"
                   (ngSubmit)="onSubmit(infinitiveForm)"
                   *ngIf="currentInfinitive"
@@ -56,7 +56,7 @@
 
         </div>
 
-        <div class="col-md-6" *ngIf="reverse">
+        <div class="col-md-6" *ngIf="reverse && currentInfinitive">
             <form [formGroup]="rInfinitiveForm"
                   (ngSubmit)="onSubmit(rInfinitiveForm)"
                   *ngIf="currentInfinitive"

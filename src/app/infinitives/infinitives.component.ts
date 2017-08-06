@@ -36,7 +36,7 @@ export class InfinitivesComponent implements OnInit {
 
 
         this.listenerFn = this.renderer.listen('document', 'keydown', (evt) => {
-            this.identKey(evt.key);
+            this.identKey(evt);
         })
     }
 
@@ -46,8 +46,9 @@ export class InfinitivesComponent implements OnInit {
         }
     }
 
-    private identKey(key: string) {
-        if(key === '6'){
+    private identKey(event) {
+        if(event.key === '6'){
+            event.preventDefault();
             this.getRandomInfinitive();
         }
     }

@@ -109,7 +109,7 @@ export class CardsService {
             let infinitive = new Infinitive(res.translation, res.infinitive, res.pastSimple, res.pastParticiple);
             return infinitive;
         } catch (e) {
-            return e;
+            return null;
         }
     }
 
