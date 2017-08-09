@@ -11,6 +11,7 @@ var index = require('./routes/index');
 var cards = require('./routes/cards');
 var auth = require('./routes/auth');
 var infinitives = require('./routes/infinitives');
+var categories = require('./routes/categories');
 
 var app = express();
 
@@ -74,6 +75,7 @@ app.use('/', index);
 app.use('/card', cards);
 app.use('/infinitive', infinitives);
 app.use('/auth', auth);
+app.use('/categories', categories);
 
 app.get('/*', function (req, res) {
     res.sendfile(path.join(__dirname + '/dist/index.html'));

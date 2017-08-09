@@ -1,6 +1,7 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {CardsService} from "../../shared/cards.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {Card} from "../../shared/model/card";
 
 
 @Component({
@@ -16,6 +17,7 @@ export class CardsListComponent implements OnInit {
 
     cardsList = [];
     public modalRef: BsModalRef;
+    selectedCard: Card;
 
     ngOnInit() {
         this.cardsService.getAllCards().subscribe(
@@ -35,10 +37,11 @@ export class CardsListComponent implements OnInit {
         );
     }
 
-    public openModal(template: TemplateRef<any>) {
+    public openModal(template: TemplateRef<any>, card: Card) {
         // this.socketService.freeUsers = Object.keys(this.socketService.actualConnections);
         // this.socketService.addedUsers = [];
         // this.newRoomName = null;
+        this.selectedCard = card;
         this.modalRef = this.modalService.show(template);
     }
 

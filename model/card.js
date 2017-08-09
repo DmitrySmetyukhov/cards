@@ -12,6 +12,11 @@ let schema = new Schema({
         type    : String,
         unique  : true,
         required: true
+    },
+
+    category: {
+        type   : String,
+        default: 'all'
     }
 });
 

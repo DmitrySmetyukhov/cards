@@ -52,6 +52,8 @@ export class CardsService {
     private extractCard(response: Response): Card {
         try {
             let res = response.json();
+
+            console.log(res, 'res')
             let card = new Card(res.word, res.translation);
             return card;
         } catch (e) {
