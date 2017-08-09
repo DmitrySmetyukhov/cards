@@ -51,8 +51,15 @@ export class CardsListComponent implements OnInit {
     }
 
     setCategory(category, card) {
+        this.modalRef.hide();
         this.cardsService.setCategory(category._id, card._id).subscribe(
-            (res) => {}
+            (res) => {
+                this.cardsList.forEach(function (item, i, arr) {
+                    if (item._id === res['_id']) {
+                        arr[i] = res;
+                    }
+                })
+            }
         )
     }
 

@@ -53,9 +53,7 @@ export class CardsService {
     private extractCard(response: Response): Card {
         try {
             let res = response.json();
-
-            console.log(res, 'res')
-            let card = new Card(res.word, res.translation, res.category);
+            let card = new Card(res.word, res.translation, res.category, res._id);
             return card;
         } catch (e) {
             return e;
@@ -164,9 +162,8 @@ export class CardsService {
 
     }
 
-    public setCategory(categoryId, cardId){
-        console.log(categoryId, 'categId');
-        // console.log(cardId, 'cardId')
+    public setCategory(categoryId, cardId) {
         return this.http.post(this.apiUrl + '/card/setCategory', {cardId: cardId, categoryId: categoryId})
+            .map(this.extractCard)
     }
 }
