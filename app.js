@@ -1,29 +1,32 @@
 var express = require('express');
+var config = require('./config');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var index = require('./routes/index');
 var cards = require('./routes/cards');
+var auth = require('./routes/auth');
 var infinitives = require('./routes/infinitives');
 
 var app = express();
 
 
-const forceSSL = function() {
-    return function (req, res, next) {
-        if (!req.headers['x-forwarded-proto'] || req.headers['x-forwarded-proto'] !== 'https') {
-            return res.redirect(
-                ['https://', req.get('Host'), req.url].join('')
-            );
-        }
-        next();
-    }
-};
-
-app.use(forceSSL());
+// const forceSSL = function() {
+//     return function (req, res, next) {
+//         if (!req.headers['x-forwarded-proto'] || req.headers['x-forwarded-proto'] !== 'https') {
+//             return res.redirect(
+//                 ['https://', req.get('Host'), req.url].join('')
+//             );
+//         }
+//         next();
+//     }
+// };
+//
+// app.use(forceSSL());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,6 +52,18 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+
+
+var sessionStore = require('./lib/sessionStore');
+app.use(session({
+    secret           : config.get('session:secret'),
+    key              : config.get('session:key'),
+    resave           : config.get('session:resave'),
+    saveUninitialized: config.get('session:saveUninitialized'),
+    cookie           : config.get('session:cookie'),
+    store            : sessionStore
+}));
+
 app.use(express.static(path.join(__dirname, '/dist')));
 
 
@@ -58,6 +73,7 @@ app.use(express.static(path.join(__dirname, '/dist')));
 app.use('/', index);
 app.use('/card', cards);
 app.use('/infinitive', infinitives);
+app.use('/auth', auth);
 
 app.get('/*', function (req, res) {
     res.sendfile(path.join(__dirname + '/dist/index.html'));
@@ -78,7 +94,8 @@ app.use(function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.send(err.message || err);
+    // res.render('error');
 });
 
 module.exports = app;

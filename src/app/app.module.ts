@@ -15,6 +15,8 @@ import {CardsListComponent} from './cards/cards-list/cards-list.component';
 import {CreateCardsComponent} from './cards/create-cards/create-cards.component';
 import {CreateInfinitivesComponent} from './infinitives/create-infinitives/create-infinitives.component';
 import {InfinitivesListComponent} from './infinitives/infinitives-list/infinitives-list.component';
+import {AuthService} from "./shared/auth.service";
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,8 @@ import {InfinitivesListComponent} from './infinitives/infinitives-list/infinitiv
         CardsListComponent,
         CreateCardsComponent,
         CreateInfinitivesComponent,
-        InfinitivesListComponent
+        InfinitivesListComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -60,12 +63,17 @@ import {InfinitivesListComponent} from './infinitives/infinitives-list/infinitiv
             {
                 path: 'infinitives-list',
                 component: InfinitivesListComponent
+            },
+            {
+                path: 'login',
+                component: LoginComponent
             }
         ])
     ],
     providers: [
         CardsService,
-        HttpService
+        HttpService,
+        AuthService
     ],
     bootstrap: [AppComponent]
 })

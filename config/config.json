@@ -2,7 +2,7 @@
   "port": 3000,
   "_prodUri": "mongodb://dima:777Dima777@ds033086.mlab.com:33086/airlines",
   "mongoose": {
-    "uri": "mongodb://dima:777Dima777@ds033086.mlab.com:33086/airlines",
+    "uri": "mongodb://localhost/cards",
     "options": {
       "useMongoClient": true,
       "server": {
@@ -10,6 +10,16 @@
           "keepAlive": 1
         }
       }
+    }
+  },
+  "session": {
+    "secret": "87687uyghgvjhgvrdtgiu",
+    "key": "sessId",
+    "resave": false,
+    "saveUninitialized": false,
+    "cookie": {
+      "path": "/",
+      "httpOnly": true
     }
   }
 }
