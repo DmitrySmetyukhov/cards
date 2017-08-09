@@ -30,7 +30,7 @@ export class CreateCardsComponent implements OnInit {
 
 
     onSubmitNew(form) {
-        let card = new Card(form.value.newWord.trim(), form.value.newTranslation.trim());
+        let card = new Card(form.value.newWord.trim(), form.value.newTranslation.trim(), null);
         this.cardsService.createCard(card).subscribe(
             () => form.reset(),
             (error) => console.log(error, 'error')

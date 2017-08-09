@@ -11,6 +11,8 @@
       <div class="row" *ngFor="let card of cardsList">
         <div class="col-md-3">{{card.word}}</div>
         <div class="col-md-3">{{card.translation}}</div>
+        <div class="col-md-3">{{card.category}}</div>
+
         <div class="col-md-1"><button class="btn btn-link" (click)="deleteCard(card)">X</button></div>
         <div class="col-md-2"><button (click)="openModal(template, card)">open modal</button></div>
       </div>
@@ -34,6 +36,10 @@
   <div class="modal-body">
     <h1>Body</h1>
     <div>{{selectedCard.word}}</div>
+
+    <h4 *ngFor="let category of categoriesList">
+      <button class="btn btn-link" (click)="setCategory(category, selectedCard)">{{category.name}}</button>
+    </h4>
 
 
     <button>test

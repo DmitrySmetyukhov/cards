@@ -20,4 +20,6 @@ let schema = new Schema({
     }
 });
 
+
+
 exports.Card = mongoose.model('Card', schema);

@@ -14,6 +14,7 @@ export class CardsService {
     // private infinitivesUrl = 'https://afternoon-fortress-84676.herokuapp.com/infinitive';
     private url = 'http://localhost:3000/card';
     private infinitivesUrl = 'http://localhost:3000/infinitive';
+    private apiUrl = 'http://localhost:3000';
 
     constructor(private http: HttpService) {
     }
@@ -54,7 +55,7 @@ export class CardsService {
             let res = response.json();
 
             console.log(res, 'res')
-            let card = new Card(res.word, res.translation);
+            let card = new Card(res.word, res.translation, res.category);
             return card;
         } catch (e) {
             return e;
@@ -90,7 +91,7 @@ export class CardsService {
         return this.http.post(this.infinitivesUrl, {infinitive: infinitive})
     }
 
-    public deleteInfinitive(_id: string){
+    public deleteInfinitive(_id: string) {
         return this.http.delete(this.infinitivesUrl + '/' + _id)
             .map((response) => response.json());
     }
@@ -144,5 +145,28 @@ export class CardsService {
             }
             return true;
         }
+    }
+
+
+    public getAllCategories() {
+        return this.http.get(this.apiUrl + '/categories')
+            .map(this.extractCategories);
+    }
+
+    private extractCategories(response: Response) {
+        try {
+            let res = response.json();
+            console.log(res, 'res');
+            return res;
+        } catch (e) {
+            return e;
+        }
+
+    }
+
+    public setCategory(categoryId, cardId){
+        console.log(categoryId, 'categId');
+        // console.log(cardId, 'cardId')
+        return this.http.post(this.apiUrl + '/card/setCategory', {cardId: cardId, categoryId: categoryId})
     }
 }

@@ -18,11 +18,19 @@ export class CardsListComponent implements OnInit {
     cardsList = [];
     public modalRef: BsModalRef;
     selectedCard: Card;
+    categoriesList: string[];
 
     ngOnInit() {
         this.cardsService.getAllCards().subscribe(
             (cards) => this.cardsList = cards
         );
+
+        this.cardsService.getAllCategories().subscribe(
+            (list) => this.categoriesList = list,
+            (e) => console.log(e, 'error')
+        )
+
+
     }
 
     private deleteCard(card) {
@@ -38,11 +46,14 @@ export class CardsListComponent implements OnInit {
     }
 
     public openModal(template: TemplateRef<any>, card: Card) {
-        // this.socketService.freeUsers = Object.keys(this.socketService.actualConnections);
-        // this.socketService.addedUsers = [];
-        // this.newRoomName = null;
         this.selectedCard = card;
         this.modalRef = this.modalService.show(template);
+    }
+
+    setCategory(category, card) {
+        this.cardsService.setCategory(category._id, card._id).subscribe(
+            (res) => {}
+        )
     }
 
 }
