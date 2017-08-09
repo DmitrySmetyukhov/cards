@@ -14,11 +14,11 @@ export class CardsComponent implements OnInit {
     reverseForm: FormGroup;
     translation: string;
     rWord: string;
-    currentCard: Card;
     translationError: string;
     reverse: boolean;
     listenerFn: () => void;
-    pending;
+
+
 
     constructor(private cardsService: CardsService,
                 private fb: FormBuilder, private renderer: Renderer2) {
@@ -26,13 +26,7 @@ export class CardsComponent implements OnInit {
 
     ngOnInit() {
         this.buildForm();
-        this.cardsService.getRandomCard().subscribe(
-            (card) => this.currentCard = card,
-            (err) => console.log(err, 'error')
-        );
-
         this.listenerFn = this.renderer.listen('document', 'keydown', (evt) => {
-
             this.identKey(evt);
         });
     }
@@ -58,36 +52,17 @@ export class CardsComponent implements OnInit {
     private identKey(event) {
         if (event.key === '6') {
             event.preventDefault();
-            this.getRandomCard();
+            this.cardsService.getRandomCard();
         }
     }
 
 
-    private getRandomCard() {
-        if(this.pending) return;
-        return new Promise<any>((resolve, reject) => {
-            this.pending = true;
-            this.cardsService.getRandomCard().subscribe(
-                (card) => {
-                    this.currentCard = card;
-                    resolve();
-                    this.pending = null;
-                },
-                (err) => console.log(err, 'err')
-            )
-        })
-    }
-
-
     check(form) {
-        if (form.value.translation.trim() == this.currentCard.translation) {
+        if (form.value.translation.trim() == this.cardsService.currentCard.translation) {
             this.translationError = null;
             form.reset();
             this.translation = null;
-            this.cardsService.getRandomCard().subscribe(
-                (card) => this.currentCard = card,
-                (error) => console.log(error, 'error')
-            );
+            this.cardsService.getRandomCard();
         } else {
             this.translationError = 'error';
         }
@@ -100,14 +75,11 @@ export class CardsComponent implements OnInit {
 
     reverseCheck(form) {
         if (form.invalid) return;
-        if (form.value.rWord == this.currentCard.word) {
+        if (form.value.rWord == this.cardsService.currentCard.word) {
             this.translationError = null;
             form.reset();
             this.translation = null;
-            this.cardsService.getRandomCard().subscribe(
-                (card) => this.currentCard = card,
-                (error) => console.log(error, 'error')
-            );
+            this.cardsService.getRandomCard()
         } else {
             this.translationError = 'error';
         }

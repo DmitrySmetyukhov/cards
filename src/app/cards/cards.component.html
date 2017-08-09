@@ -1,12 +1,21 @@
 
 
-
-
-
-
-
-
 <div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-2">
+            <div class="btn-group" dropdown>
+                <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+                    Button dropdown <span class="caret"></span>
+                </button>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li *ngFor="let category of cardsService.categoriesList">
+                        <button class="btn btn-link" (click)="cardsService.filterByCategory(category)">{{category.name}}</button> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-3">
@@ -19,8 +28,8 @@
             </button>
         </div>
         <div class="col-md-6" *ngIf="!reverse">
-            <form [formGroup]="cardForm" (ngSubmit)="check(cardForm)" *ngIf="currentCard">
-                <h2>{{currentCard.word}}</h2>
+            <form [formGroup]="cardForm" (ngSubmit)="check(cardForm)" *ngIf="cardsService.currentCard">
+                <h2>{{cardsService.currentCard.word}}</h2>
                 <label for="translation" class="col-2 col-form-label">Translation</label>
                 <input
                         class="form-control"
@@ -34,8 +43,8 @@
         </div>
 
         <div class="col-md-6" *ngIf="reverse">
-            <form [formGroup]="reverseForm" (ngSubmit)="reverseCheck(reverseForm)" *ngIf="currentCard">
-                <h2>{{currentCard.translation}}</h2>
+            <form [formGroup]="reverseForm" (ngSubmit)="reverseCheck(reverseForm)" *ngIf="cardsService.currentCard">
+                <h2>{{cardsService.currentCard.translation}}</h2>
                 <label for="rTranslation" class="col-2 col-form-label">Слово</label>
                 <input
                         class="form-control"
@@ -51,4 +60,5 @@
         </div>
     </div>
 </div>
+
 

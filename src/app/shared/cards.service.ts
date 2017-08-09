@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import {HttpService} from "./http.service";
 import {Card} from "./model/card";
 import {Observable} from "rxjs";
@@ -16,8 +16,19 @@ export class CardsService {
     private infinitivesUrl = 'http://localhost:3000/infinitive';
     private apiUrl = 'http://localhost:3000';
 
+    public cardsList: Card[];
+    public categoriesList = [];
+    public actualCardsList = [];
+    currentCard: Card;
+
     constructor(private http: HttpService) {
+        this.getAllCategories();
+        this.getAllCards().subscribe(
+            () => {
+                this.getRandomCard()
+            })
     }
+
 
     public deleteCard(id) {
         return this.http.delete(this.url + '/' + id)
@@ -26,14 +37,33 @@ export class CardsService {
 
 
     public getAllCards() {
-        return this.http.get(this.url)
+        let result = this.http.get(this.url)
             .map(this.extractCards);
+        result.subscribe(
+            (list) => {
+                this.actualCardsList = this.cardsList = list;
+                this.getRandomCard();
+            },
+            (err) => alert(err)
+        );
+        return result;
     }
 
-    public getRandomCard(): Observable<Card> {
-        return this.http.get(this.url + '/random')
-            .map(this.extractCard)
-            .catch(this.handleError)
+    public filterByCategory(category) {
+        this.actualCardsList = this.cardsList.filter((item) => {
+            return item.category === category.name;
+        });
+
+        this.getRandomCard();
+    }
+
+
+    public getRandomCard() {
+        if (!this.actualCardsList || !this.actualCardsList.length)
+            this.currentCard = null;
+        let index = Math.floor(Math.random() * this.actualCardsList.length);
+
+        this.currentCard = this.actualCardsList[index];
     }
 
     public createCard(card: Card) {
@@ -147,14 +177,22 @@ export class CardsService {
 
 
     public getAllCategories() {
-        return this.http.get(this.apiUrl + '/categories')
+        let result = this.http.get(this.apiUrl + '/categories')
             .map(this.extractCategories);
+
+        result.subscribe(
+            (list) => {
+                this.categoriesList = list;
+            },
+            (err) => alert(err)
+        );
+
+        return result;
     }
 
     private extractCategories(response: Response) {
         try {
             let res = response.json();
-            console.log(res, 'res');
             return res;
         } catch (e) {
             return e;
