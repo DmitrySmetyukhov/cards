@@ -17,6 +17,7 @@ import {CreateInfinitivesComponent} from './infinitives/create-infinitives/creat
 import {InfinitivesListComponent} from './infinitives/infinitives-list/infinitives-list.component';
 import {AuthService} from "./shared/auth.service";
 import { LoginComponent } from './login/login.component';
+import {ModalModule} from "ngx-bootstrap";
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { LoginComponent } from './login/login.component';
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
+        ModalModule.forRoot(),
         RouterModule.forRoot([
             {
                 path: '',

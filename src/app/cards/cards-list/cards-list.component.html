@@ -2,17 +2,64 @@
   <div class="row">
 
 
-    <div class="col-md-3">
-      <h2><a [routerLink]="['../cards']">Cards</a></h2>
-      <h2><a [routerLink]="['../create-cards']">Create</a></h2>
+    <div class="col-md-2">
+      <h4><a [routerLink]="['../cards']">Cards</a></h4>
+      <h4><a [routerLink]="['../create-cards']">Create</a></h4>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-10">
       all
       <div class="row" *ngFor="let card of cardsList">
-        <div class="col-md-2">{{card.word}}</div>
-        <div class="col-md-2">{{card.translation}}</div>
-        <div class="col-md-2"><button class="btn btn-link" (click)="deleteCard(card)">delete</button></div>
+        <div class="col-md-3">{{card.word}}</div>
+        <div class="col-md-3">{{card.translation}}</div>
+        <div class="col-md-1"><button class="btn btn-link" (click)="deleteCard(card)">X</button></div>
+        <div class="col-md-2"><button (click)="openModal(template)">open modal</button></div>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+<template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+  <div class="modal-body">
+    <h1>Body</h1>
+    <!--Room name: <input type="text" [(ngModel)]="newRoomName"/>-->
+    <!--<div class="row add-users">-->
+      <!--<div class="col-md-6 not-in-room">-->
+        <!--All Users:-->
+        <!--<ul>-->
+          <!--<li *ngFor="let user of socketService.freeUsers">-->
+            <!--{{user}}-->
+            <!--<a href="#" (click)="addUserToRoom(user, $event)">+</a>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+
+      <!--<div class="col-md-6 in-room">-->
+        <!--Added users-->
+        <!--<ul>-->
+          <!--<li *ngFor="let user of socketService.addedUsers">-->
+            <!--{{user}}-->
+            <!--<a href="#" (click)="removeFromRoom(user, $event)">-</a>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <button>test
+            <!--[disabled]="!newRoomName"-->
+            <!--(click)="createRoom(newRoomName)"-->
+    <!--&gt;create-->
+    </button>
+  </div>
+</template>
